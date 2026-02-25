@@ -12,6 +12,36 @@ import {
 } from "lucide-react";
 
 export default function Hero() {
+  // Animation state: 0 = standing, 1 = falling, 2 = fallen, 3 = detected, 4 = notification sent
+  const [animationPhase, setAnimationPhase] = useState(0);
+
+  useEffect(() => {
+    // Animation cycle: 12 seconds total
+    const cycle = () => {
+      // Phase 0: Standing (0-3s)
+      setAnimationPhase(0);
+      
+      // Phase 1: Falling (3-4s)
+      setTimeout(() => setAnimationPhase(1), 3000);
+      
+      // Phase 2: Fallen on ground (4-5s)
+      setTimeout(() => setAnimationPhase(2), 4000);
+      
+      // Phase 3: Camera detects - red border (5-6s)
+      setTimeout(() => setAnimationPhase(3), 5000);
+      
+      // Phase 4: Alert notification sent (6-10s)
+      setTimeout(() => setAnimationPhase(4), 6000);
+      
+      // Reset cycle (10s)
+      setTimeout(() => setAnimationPhase(0), 10000);
+    };
+
+    cycle();
+    const interval = setInterval(cycle, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden noise-bg">
       {/* Animated background blobs */}
@@ -158,33 +188,65 @@ export default function Hero() {
                       <div className="w-10 h-10 bg-green/30 rounded-full" />
                       <div className="w-2 h-8 bg-green/20 rounded-full" />
                     </div>
-                    {/* Person silhouette */}
+                    {/* Person silhouette with fall animation */}
                     <motion.div
-                      animate={{ opacity: [0.6, 1, 0.6] }}
-                      transition={{ duration: 3, repeat: Infinity }}
+                      animate={{
+                        rotate: animationPhase >= 1 ? 90 : 0,
+                        x: animationPhase >= 1 ? 20 : 0,
+                        y: animationPhase >= 1 ? 30 : 0,
+                      }}
+                      transition={{ 
+                        duration: animationPhase === 1 ? 0.8 : 0.5,
+                        ease: animationPhase === 1 ? "easeIn" : "easeOut"
+                      }}
                       className="absolute bottom-8 left-1/2 -translate-x-1/2"
+                      style={{ transformOrigin: "bottom center" }}
                     >
                       <div className="w-8 h-8 bg-navy/20 rounded-full mx-auto" />
                       <div className="w-12 h-16 bg-navy/15 rounded-xl mt-1" />
                     </motion.div>
-                    {/* AI detection overlay */}
+                    {/* AI detection overlay - changes color based on detection */}
                     <motion.div
-                      animate={{ opacity: [0, 0.8, 0] }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        repeatDelay: 2,
+                      animate={{ 
+                        opacity: animationPhase >= 3 ? 1 : animationPhase === 0 ? [0, 0.5, 0] : 0,
+                        borderColor: animationPhase >= 3 ? "#ef4444" : "#3b7255",
+                        scale: animationPhase >= 3 ? [1, 1.05, 1] : 1,
                       }}
-                      className="absolute bottom-4 left-1/2 -translate-x-1/2 w-24 h-28 border-2 border-green rounded-xl"
+                      transition={{
+                        duration: animationPhase >= 3 ? 0.3 : 3,
+                        repeat: animationPhase === 0 ? Infinity : animationPhase >= 3 ? Infinity : 0,
+                        repeatDelay: animationPhase === 0 ? 2 : 0.5,
+                      }}
+                      className="absolute bottom-4 left-1/2 -translate-x-1/2 w-24 h-28 border-2 rounded-xl"
+                      style={{ 
+                        transform: animationPhase >= 2 ? "translateX(-30%) translateY(10px)" : "translateX(-50%)",
+                      }}
                     />
-                    {/* Status badge */}
-                    <div className="absolute top-4 right-4 flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5">
+                    {/* Alert flash when fall detected */}
+                    {animationPhase >= 3 && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: [0, 0.3, 0] }}
+                        transition={{ duration: 0.5, repeat: Infinity }}
+                        className="absolute inset-0 bg-red-500/20 rounded-2xl"
+                      />
+                    )}
+                    {/* Status badge - changes based on detection */}
+                    <div className={`absolute top-4 right-4 flex items-center gap-2 backdrop-blur-sm rounded-full px-3 py-1.5 transition-all duration-300 ${
+                      animationPhase >= 3 ? "bg-red-50/95" : "bg-white/90"
+                    }`}>
                       <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-green"></span>
+                        <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
+                          animationPhase >= 3 ? "bg-red-500" : "bg-green"
+                        }`}></span>
+                        <span className={`relative inline-flex rounded-full h-2 w-2 ${
+                          animationPhase >= 3 ? "bg-red-500" : "bg-green"
+                        }`}></span>
                       </span>
-                      <span className="text-xs font-medium text-navy/70">
-                        Surveillance active
+                      <span className={`text-xs font-medium ${
+                        animationPhase >= 3 ? "text-red-600" : "text-navy/70"
+                      }`}>
+                        {animationPhase >= 3 ? "⚠️ Chute détectée !" : "Surveillance active"}
                       </span>
                     </div>
                     {/* Camera icon */}
@@ -196,9 +258,16 @@ export default function Hero() {
                 {/* Bottom status bar */}
                 <div className="flex items-center justify-between mt-4 px-2">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-green" />
-                    <span className="text-xs text-navy/70 font-medium">
-                      Salon — Aucun risque détecté
+                    <motion.div 
+                      animate={{ 
+                        backgroundColor: animationPhase >= 3 ? "#ef4444" : "#3b7255" 
+                      }}
+                      className="w-2 h-2 rounded-full"
+                    />
+                    <span className={`text-xs font-medium transition-colors duration-300 ${
+                      animationPhase >= 3 ? "text-red-600" : "text-navy/70"
+                    }`}>
+                      {animationPhase >= 3 ? "Salon — ALERTE CHUTE" : "Salon — Aucun risque détecté"}
                     </span>
                   </div>
                   <span className="text-xs text-navy/60">
@@ -207,42 +276,96 @@ export default function Hero() {
                 </div>
               </motion.div>
 
-              {/* Floating phone notification */}
+              {/* Floating phone notification - changes based on alert */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1.2 }}
+                animate={{ 
+                  opacity: 1, 
+                  y: 0,
+                  scale: animationPhase === 4 ? [1, 1.05, 1] : 1,
+                }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: animationPhase === 4 ? 0 : 1.2,
+                  scale: { duration: 0.3, repeat: animationPhase === 4 ? 3 : 0 }
+                }}
                 className="absolute -bottom-6 -left-6 z-20"
               >
                 <motion.div
-                  animate={{ y: [0, -5, 0] }}
+                  animate={{ 
+                    y: animationPhase === 4 ? 0 : [0, -5, 0],
+                    x: animationPhase === 4 ? [0, -3, 3, -3, 3, 0] : 0,
+                  }}
                   transition={{
-                    duration: 4,
+                    duration: animationPhase === 4 ? 0.5 : 4,
                     repeat: Infinity,
                     ease: "easeInOut",
-                    delay: 1,
+                    delay: animationPhase === 4 ? 0 : 1,
                   }}
-                  className="bg-white rounded-2xl shadow-xl shadow-navy/10 p-4 border border-navy/5 w-56"
+                  className={`rounded-2xl shadow-xl p-4 border w-56 transition-all duration-300 ${
+                    animationPhase >= 4 
+                      ? "bg-red-50 border-red-200 shadow-red-500/20" 
+                      : "bg-white border-navy/5 shadow-navy/10"
+                  }`}
                 >
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-teal to-green flex items-center justify-center flex-shrink-0">
-                      <Smartphone className="w-4 h-4 text-white" />
+                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
+                      animationPhase >= 4 
+                        ? "bg-gradient-to-br from-red-500 to-red-600" 
+                        : "bg-gradient-to-br from-teal to-green"
+                    }`}>
+                      {animationPhase >= 4 ? (
+                        <AlertTriangle className="w-4 h-4 text-white" />
+                      ) : (
+                        <Smartphone className="w-4 h-4 text-white" />
+                      )}
                     </div>
                     <div>
-                      <p className="text-xs font-semibold text-navy">
+                      <p className={`text-xs font-semibold ${
+                        animationPhase >= 4 ? "text-red-600" : "text-navy"
+                      }`}>
                         SafeNest
                       </p>
-                      <p className="text-[10px] text-navy/60">À l&apos;instant</p>
-                    </div>
-                  </div>
-                  <div className="bg-green/10 rounded-xl p-2.5">
-                    <div className="flex items-center gap-2">
-                      <Bell className="w-3 h-3 text-green" />
-                      <p className="text-[11px] text-navy/70 font-medium">
-                        Tout va bien — Activité normale détectée
+                      <p className={`text-[10px] ${
+                        animationPhase >= 4 ? "text-red-500" : "text-navy/60"
+                      }`}>
+                        {animationPhase >= 4 ? "🔴 URGENT" : "À l'instant"}
                       </p>
                     </div>
                   </div>
+                  <div className={`rounded-xl p-2.5 transition-all duration-300 ${
+                    animationPhase >= 4 ? "bg-red-100" : "bg-green/10"
+                  }`}>
+                    <div className="flex items-center gap-2">
+                      {animationPhase >= 4 ? (
+                        <AlertTriangle className="w-3 h-3 text-red-600" />
+                      ) : (
+                        <Bell className="w-3 h-3 text-green" />
+                      )}
+                      <p className={`text-[11px] font-medium ${
+                        animationPhase >= 4 ? "text-red-700" : "text-navy/70"
+                      }`}>
+                        {animationPhase >= 4 
+                          ? "⚠️ Chute détectée — Salon" 
+                          : "Tout va bien — Activité normale détectée"}
+                      </p>
+                    </div>
+                  </div>
+                  {animationPhase >= 4 && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      transition={{ duration: 0.3 }}
+                      className="mt-2 flex gap-2"
+                    >
+                      <button className="flex-1 text-[10px] font-semibold bg-red-600 text-white rounded-lg py-1.5">
+                        Appeler
+                      </button>
+                      <button className="flex-1 text-[10px] font-semibold bg-white text-red-600 border border-red-200 rounded-lg py-1.5">
+                        Voir caméra
+                      </button>
+                    </motion.div>
+                  )}
                 </motion.div>
               </motion.div>
 
