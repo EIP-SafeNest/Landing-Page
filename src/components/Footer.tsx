@@ -23,7 +23,7 @@ export default function Footer() {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-4">
             Prêt à protéger vos proches ?
           </h2>
-          <p className="text-white/50 text-lg mb-8 max-w-xl mx-auto">
+          <p className="text-white/70 text-lg mb-8 max-w-xl mx-auto">
             Rejoignez les familles qui font confiance à SafeNest pour veiller
             sur leurs aînés, en toute sérénité.
           </p>
@@ -58,20 +58,20 @@ export default function Footer() {
                   Safe<span className="text-teal-300">Nest</span>
                 </span>
               </div>
-              <p className="text-white/40 text-sm leading-relaxed mb-6 max-w-sm">
+              <p className="text-white/60 text-sm leading-relaxed mb-6 max-w-sm">
                 Protection intelligente du domicile par IA embarquée.
                 Confidentialité garantie, sérénité assurée.
               </p>
               <div className="space-y-2">
-                <div className="flex items-center gap-2 text-sm text-white/40">
+                <div className="flex items-center gap-2 text-sm text-white/60">
                   <Mail className="w-4 h-4" />
                   <span>contact@safenest.fr</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-white/40">
+                <div className="flex items-center gap-2 text-sm text-white/60">
                   <Phone className="w-4 h-4" />
                   <span>01 23 45 67 89</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-white/40">
+                <div className="flex items-center gap-2 text-sm text-white/60">
                   <MapPin className="w-4 h-4" />
                   <span>Paris, France</span>
                 </div>

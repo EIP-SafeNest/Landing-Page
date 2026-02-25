@@ -6,8 +6,8 @@ import { Check, ArrowRight, Sparkles } from "lucide-react";
 
 const plans = [
   {
-    name: "Essentielle",
-    price: "59,99",
+    name: "Classique",
+    price: "400€ + 59,99",
     period: "/mois",
     description: "L'essentiel pour commencer à protéger vos proches.",
     features: [
@@ -20,24 +20,6 @@ const plans = [
     cta: "Choisir cette offre",
     popular: false,
     gradient: "from-teal to-teal-600",
-  },
-  {
-    name: "Premium",
-    price: "15",
-    period: "/mois",
-    priceSuffix: "+ caméra",
-    description: "Une protection complète et multi-risques pour toute sérénité.",
-    features: [
-      "Tout de l'offre Essentielle",
-      "Détection de risques multiples",
-      "Alertes avancées & personnalisables",
-      "Recommandations préventives",
-      "Installation par un technicien SAV",
-      "Support prioritaire 7j/7",
-    ],
-    cta: "Choisir cette offre",
-    popular: true,
-    gradient: "from-orange to-yellow",
   },
 ];
 
@@ -65,8 +47,8 @@ export default function Pricing() {
             Des offres{" "}
             <span className="gradient-text">simples et transparentes</span>
           </h2>
-          <p className="mt-6 text-lg text-navy/50 leading-relaxed">
-            Choisissez la formule adaptée à vos besoins. Sans engagement, sans
+          <p className="mt-6 text-lg text-navy/70 leading-relaxed">
+            Choisissez la formule adaptée à vos besoins. 3 mois d'engagement minimum, sans
             surprise.
           </p>
         </motion.div>
@@ -117,7 +99,7 @@ export default function Pricing() {
                 {/* Price */}
                 <div className="flex items-baseline gap-1 mb-8">
                   <span
-                    className={`text-5xl font-extrabold ${
+                    className={`text-3xl font-extrabold ${
                       plan.popular ? "text-white" : "text-navy"
                     }`}
                   >
@@ -196,7 +178,7 @@ export default function Pricing() {
           transition={{ delay: 0.8 }}
           className="text-center text-sm text-navy/40 mt-10"
         >
-          Sans engagement · Annulation à tout moment · Satisfait ou remboursé 30
+          3 mois d'engagement · Satisfait ou remboursé 30
           jours
         </motion.p>
       </div>

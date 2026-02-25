@@ -71,7 +71,7 @@ export default function Testimonial() {
                   {/* Author */}
                   <div>
                     <p className="font-bold text-navy">Camille D.</p>
-                    <p className="text-sm text-navy/40">
+                    <p className="text-sm text-navy/60">
                       Étudiante en médecine — Lyon
                     </p>
                   </div>

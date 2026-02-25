@@ -8,8 +8,8 @@
   --navy: #233d4d;
   --orange: #fe7f2d;
   --yellow: #fcca46;
-  --green: #a1c181;
-  --teal: #619b8a;
+  --green: #3b7255;
+  --teal: #0a543e;
 }
 
 * {
@@ -39,7 +39,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #619b8a;
+  background: #0a543e;
   border-radius: 4px;
 }
 
@@ -49,7 +49,7 @@ body {
 
 /* Gradient text utility */
 .gradient-text {
-  background: linear-gradient(135deg, #233d4d 0%, #619b8a 50%, #a1c181 100%);
+  background: linear-gradient(135deg, #233d4d 0%, #0a543e 50%, #3b7255 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -94,7 +94,7 @@ body {
   position: absolute;
   inset: -2px;
   border-radius: inherit;
-  background: conic-gradient(from var(--angle, 0deg), #619b8a, #a1c181, #fcca46, #fe7f2d, #619b8a);
+  background: conic-gradient(from var(--angle, 0deg), #0a543e, #3b7255, #fcca46, #fe7f2d, #0a543e);
   animation: gradient-rotate 4s linear infinite;
   z-index: -1;
   opacity: 0;

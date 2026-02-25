@@ -66,7 +66,7 @@ export default function Values() {
             </span>{" "}
             ?
           </h2>
-          <p className="mt-6 text-lg text-white/50 leading-relaxed">
+          <p className="mt-6 text-lg text-white/70 leading-relaxed">
             Quatre piliers qui guident chacune de nos décisions, du
             développement à l&apos;installation.
           </p>

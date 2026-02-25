@@ -55,7 +55,7 @@ export default function Features() {
             Une protection qui{" "}
             <span className="text-green-700">évolue</span>
           </h2>
-          <p className="mt-6 text-lg text-navy/50 leading-relaxed">
+          <p className="mt-6 text-lg text-navy/70 leading-relaxed">
             SafeNest s&apos;améliore en continu pour couvrir toujours plus de
             risques domestiques, sans jamais compromettre votre vie privée.
           </p>
@@ -110,7 +110,7 @@ export default function Features() {
                 <h3 className="text-lg font-bold text-navy mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-navy/50 text-sm leading-relaxed mb-6">
+                <p className="text-navy/70 text-sm leading-relaxed mb-6">
                   {feature.description}
                 </p>
 

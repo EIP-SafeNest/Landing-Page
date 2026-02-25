@@ -1,12 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import {
   ArrowRight,
   ChevronDown,
   Smartphone,
   Bell,
   ShieldCheck,
+  AlertTriangle,
 } from "lucide-react";
 
 export default function Hero() {
@@ -77,7 +79,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.45 }}
-              className="text-lg sm:text-xl text-navy/60 leading-relaxed max-w-lg"
+              className="text-lg sm:text-xl text-navy/70 leading-relaxed max-w-lg"
             >
               SafeNest détecte automatiquement les chutes et les risques
               domestiques grâce à l&apos;IA,{" "}
@@ -195,11 +197,11 @@ export default function Hero() {
                 <div className="flex items-center justify-between mt-4 px-2">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-green" />
-                    <span className="text-xs text-navy/50 font-medium">
+                    <span className="text-xs text-navy/70 font-medium">
                       Salon — Aucun risque détecté
                     </span>
                   </div>
-                  <span className="text-xs text-navy/30">
+                  <span className="text-xs text-navy/60">
                     Traitement local uniquement
                   </span>
                 </div>
@@ -230,7 +232,7 @@ export default function Hero() {
                       <p className="text-xs font-semibold text-navy">
                         SafeNest
                       </p>
-                      <p className="text-[10px] text-navy/40">À l&apos;instant</p>
+                      <p className="text-[10px] text-navy/60">À l&apos;instant</p>
                     </div>
                   </div>
                   <div className="bg-green/10 rounded-xl p-2.5">
@@ -266,7 +268,7 @@ export default function Hero() {
                       <p className="text-[10px] font-bold text-navy">
                         100% Local
                       </p>
-                      <p className="text-[9px] text-navy/40">
+                      <p className="text-[9px] text-navy/60">
                         Aucune donnée transmise
                       </p>
                     </div>

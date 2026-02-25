@@ -62,7 +62,7 @@ export default function Solution() {
             Une surveillance{" "}
             <span className="gradient-text">intelligente et privée</span>
           </h2>
-          <p className="mt-6 text-lg text-navy/50 leading-relaxed">
+          <p className="mt-6 text-lg text-navy/70 leading-relaxed">
             SafeNest combine vision par ordinateur et traitement embarqué pour
             offrir une protection efficace sans compromis sur la vie privée.
           </p>
@@ -95,7 +95,7 @@ export default function Solution() {
                   <h3 className="text-xl font-bold text-navy mb-4">
                     {sol.title}
                   </h3>
-                  <p className="text-navy/55 leading-relaxed">
+                  <p className="text-navy/70 leading-relaxed">
                     {sol.description}
                   </p>
                 </div>

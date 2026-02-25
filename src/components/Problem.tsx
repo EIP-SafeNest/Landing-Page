@@ -7,8 +7,8 @@ import { TrendingDown, Heart, AlertTriangle } from "lucide-react";
 const stats = [
   {
     icon: TrendingDown,
-    value: "12 000+",
-    label: "décès par chute chaque année en France",
+    value: "20 000+",
+    label: "décès à cause d'accidents domestiques chaque année en France",
     color: "orange",
   },
   {
@@ -49,7 +49,7 @@ export default function Problem() {
             Chaque année, des milliers d&apos;accidents domestiques{" "}
             <span className="text-orange">pourraient être évités.</span>
           </h2>
-          <p className="mt-6 text-lg text-navy/50 leading-relaxed max-w-2xl mx-auto">
+          <p className="mt-6 text-lg text-navy/70 leading-relaxed max-w-2xl mx-auto">
             Les chutes sont la première cause d&apos;accidents chez les seniors.
             Les proches vivent dans l&apos;inquiétude. Les solutions actuelles sont
             intrusives ou inefficaces.
@@ -97,7 +97,7 @@ export default function Problem() {
                 >
                   {stat.value}
                 </p>
-                <p className="text-navy/60 font-medium leading-snug">
+                <p className="text-navy/70 font-medium leading-snug">
                   {stat.label}
                 </p>
                 {/* Decorative gradient line at bottom */}
